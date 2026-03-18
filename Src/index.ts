@@ -23,6 +23,6 @@ app.use("/api/auth", authRouter)
  * @route test router
  */
 app.get("/", (_req: Request, res: Response) => {
-    res.json({ masssage: "Server is running" })
+    res.json({ message: "Server is running" })
 })
 export default app;

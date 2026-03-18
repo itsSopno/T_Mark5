@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import userModel from "../Models/user.model.js";
 import tokenBlacklistModel from "../Models/Blacklist.model.js";
 import jwt from "jsonwebtoken";
+import { type CustomRequest } from "../middleware/auth.middleware.js";
 
 /**
  * @name registerUserController
@@ -14,7 +15,7 @@ export const registerUserController = async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
         if (!name || !email || !password) {
-            return res.status(400).json({ masssage: "Please provide name , email , and password" })
+            return res.status(400).json({ message: "Please provide name , email , and password" })
         }
         const isUserExist = await userModel.findOne({
             $or: [{
@@ -22,7 +23,7 @@ export const registerUserController = async (req: Request, res: Response) => {
             }, { name: name }]
         })
         if (isUserExist) {
-            return res.status(400).json({ massage: "User Already Exists" })
+            return res.status(400).json({ message: "User Already Exists" })
         }
         const hash = await bcrypt.hash(password, 10)
         const user = await userModel.create({
@@ -38,7 +39,7 @@ export const registerUserController = async (req: Request, res: Response) => {
             secure: process.env.NODE_ENV === "production",
         })
         return res.status(201).json({
-            massage: "User Registered Successfully",
+            message: "User Registered Successfully",
             token,
             user: {
                 id: user._id,
@@ -48,7 +49,7 @@ export const registerUserController = async (req: Request, res: Response) => {
         });
     }
     catch (error: any) {
-        return res.status(500).json({ massage: "Internal Server Error", error: error.massage })
+        return res.status(500).json({ message: "Internal Server Error", error: error.message })
     }
 }
 
@@ -62,11 +63,11 @@ export const LoginUserController = async (req: Request, res: Response) => {
         const { email, password } = req.body;
         const user = await userModel.findOne({ email });
         if (!user) {
-            return res.status(400).json({ massage: "invalid email or password" })
+            return res.status(400).json({ message: "invalid email or password" })
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(400).json({ massage: "passowrd is not valid" })
+            return res.status(400).json({ message: "passowrd is not valid" })
         }
         const token = jwt.sign({
             id: user._id
@@ -80,7 +81,7 @@ export const LoginUserController = async (req: Request, res: Response) => {
 
         })
         return res.status(200).json({
-            massage: "User Logged In successfully",
+            message: "User Logged In successfully",
             token,
             user: {
                 id: user._id,
@@ -91,7 +92,7 @@ export const LoginUserController = async (req: Request, res: Response) => {
 
     }
     catch (error) {
-        return res.status(500).json({ massage: "Internal Server Error" })
+        return res.status(500).json({ message: "Internal Server Error" })
 
     }
 }
@@ -106,14 +107,12 @@ export const logoutUserController = async (req: Request, res: Response): Promise
         if (token) {
             await tokenBlacklistModel.create({ token });
             res.clearCookie("token");
-            return res.status(200).json({ masssage: "User logged out successfully" }
-
-            )
-
+            return res.status(200).json({ message: "User logged out successfully" })
         }
-        return res.status(200).json({ massage: " no token found" })
+
+        return res.status(200).json({ message: " no token found" })
     } catch (error) {
-        return res.status(500).json({ massage: "Internal Server Error" })
+        return res.status(500).json({ message: "Internal Server Error" })
     }
 };
 /***
@@ -121,9 +120,8 @@ export const logoutUserController = async (req: Request, res: Response): Promise
  * @desc get user profile 
  * @access private 
  */
-export const getMeController = async (req: any, res: Response): Promise<Response | void> => {
+export const getMeController = async (req: CustomRequest, res: Response): Promise<Response | void> => {
     try {
-        req.user
         const user = await userModel.findById(req.user?.id);
 
         if (!user) {

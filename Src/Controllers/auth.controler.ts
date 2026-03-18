@@ -51,3 +51,47 @@ export const registerUserController = async (req: Request, res: Response) => {
         return res.status(500).json({ massage: "Internal Server Error", error: error.massage })
     }
 }
+
+/***
+ * @NAME loginuser Controll
+ * @desc login a user
+ * @access public 
+ */
+export const LoginUserController = async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body;
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ massage: "invalid email or password" })
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ massage: "passowrd is not valid" })
+        }
+        const token = jwt.sign({
+            id: user._id
+        }, process.env.JWT_SECRET as string,
+            {
+                expiresIn: "1d"
+            }
+        )
+        res.cookie("token", token, {
+            httpOnly: true,
+
+        })
+        return res.status(200).json({
+            massage: "User Logged In successfully",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        })
+
+    }
+    catch (error) {
+        return res.status(500).json({ massage: "Internal Server Error" })
+
+    }
+}

@@ -1,0 +1,28 @@
+import express, { type Application, type Request, type Response } from 'express';
+import dotenv from 'dotenv'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import authRouter from './Routes/auth.route.js'
+
+// Configure dotenv
+dotenv.config();
+
+const app: Application = express();
+/**
+ * @route middle ware
+ */
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors());
+/**
+ * @route using all routes
+ */
+app.use("/api/auth", authRouter)
+/**
+ * @route test router
+ */
+app.get("/", (_req: Request, res: Response) => {
+    res.json({ masssage: "Server is running" })
+})
+export default app;

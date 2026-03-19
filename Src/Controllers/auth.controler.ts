@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import userModel from "../Models/user.model.js";
 import tokenBlacklistModel from "../Models/Blacklist.model.js";
+import keyboardModel from "../Models/ketboard.model.js";
 import jwt from "jsonwebtoken";
 import { type CustomRequest } from "../middleware/auth.middleware.js";
 
@@ -140,3 +141,36 @@ export const getMeController = async (req: CustomRequest, res: Response): Promis
         return res.status(500).json({ message: "Internal server error" });
     }
 };
+
+/**
+ * @name createKeyboardCollectionControler
+ * @desc create keyboard collection
+ * @access public
+ */
+export const createKeyboardCollectionControler = async (req: Request, res: Response) => {
+    try {
+        const { name, price, image, stock, category, brand, switchType, layout, description, isFeatured } = req.body
+        if (!name || !price || !image || !stock || !category || !brand || !switchType || !layout || !description || !isFeatured) {
+            return res.status(201).json({ massage: "please provid all the required field" })
+        }
+        const keyboard = await keyboardModel.create({
+            name,
+            price,
+            image,
+            stock,
+            category,
+            brand,
+            layout,
+            switchType,
+            description,
+            isFeatured,
+        })
+        return res.status(201).json({
+            massage: "Successfull",
+            keyboard
+        })
+
+    } catch (error: any) {
+        return res.status(500).json({ massage: "Internal Server Error", error: error.message })
+    }
+} 

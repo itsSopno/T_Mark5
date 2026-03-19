@@ -150,25 +150,34 @@ export const getMeController = async (req: CustomRequest, res: Response): Promis
  */
 export const createKeyboardCollectionControler = async (req: Request, res: Response) => {
     try {
-        const { name, price, image, stock, category, brand, switchType, layout, description, isFeatured } = req.body
-        if (!name || !price || !image || !stock || !category || !brand || !switchType || !layout || !description || !isFeatured) {
-            return res.status(400).json({ message: "please provide all the required fields" })
+        const products = Array.isArray(req.body) ? req.body : [req.body];
+
+        const processedProducts = products.map(p => ({
+            name: p.name,
+            price: p.price ?? 199, // Default price if missing
+            image: p.image,
+            stock: p.stock ?? 100, // Default stock if missing
+            category: p.category ?? "Keyboards",
+            brand: p.brand ?? "Tech Gear",
+            layout: p.layout ?? "75%",
+            switchType: p.switchType ?? "Mechanical",
+            description: p.description ?? "High-end tech peripheral.",
+            isFeatured: p.isFeatured ?? false,
+        }));
+
+        // Basic validation
+        for (const p of processedProducts) {
+            if (!p.name || !p.image || !p.description) {
+                return res.status(400).json({ message: "Missing required fields (name, image, or description) in one or more items." })
+            }
         }
-        const keyboard = await keyboardModel.create({
-            name,
-            price,
-            image,
-            stock,
-            category,
-            brand,
-            layout,
-            switchType,
-            description,
-            isFeatured,
-        })
+
+        const keyboards = await keyboardModel.insertMany(processedProducts);
+
         return res.status(201).json({
             message: "Successful",
-            keyboard
+            count: keyboards.length,
+            keyboards
         })
 
     } catch (error: any) {

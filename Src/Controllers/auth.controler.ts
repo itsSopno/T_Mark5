@@ -173,4 +173,37 @@ export const createKeyboardCollectionControler = async (req: Request, res: Respo
     } catch (error: any) {
         return res.status(500).json({ massage: "Internal Server Error", error: error.message })
     }
-} 
+}
+/**
+ * @name getallkeybaord
+ * @desc get all keyboard collection 
+ * @access public
+ */
+export const getAllKeyboards = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const { category, brand, searchTerm } = req.query;
+        let query: any = {};
+
+        // ১. ক্যাটাগরি বা ব্র্যান্ড অনুযায়ী ফিল্টার
+        if (category) query.category = category;
+        if (brand) query.brand = brand;
+
+        // ২. সার্চ সুবিধা (নাম বা ডেসক্রিপশনে খুঁজবে)
+        if (searchTerm) {
+            query.$or = [
+                { name: { $regex: searchTerm, $options: 'i' } },
+                { description: { $regex: searchTerm, $options: 'i' } }
+            ];
+        }
+
+        const keyboards = await keyboardModel.find(query).sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            success: true,
+            count: keyboards.length,
+            keyboards
+        });
+    } catch (error: any) {
+        return res.status(500).json({ message: "Error fetching keyboards", error: error.message });
+    }
+};

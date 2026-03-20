@@ -25,40 +25,4 @@ export declare const logoutUserController: (req: Request, res: Response) => Prom
  * @access private
  */
 export declare const getMeController: (req: CustomRequest, res: Response) => Promise<Response | void>;
-/**
- * @name createKeyboardCollectionControler
- * @desc create keyboard collection
- * @access public
- */
-export declare const createKeyboardCollectionControler: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
-/**
- * @name getallkeybaord
- * @desc get all keyboard collection
- * @access public
- */
-export declare const getAllKeyboards: (req: Request, res: Response) => Promise<Response>;
-/**
- * @name getSingleKeyboard
- * @desc get a single keyboard
- * @access public
- */
-export declare const getSingleKeyboard: (req: Request, res: Response) => Promise<Response>;
-/**
- * @name CreateAllProductController
- * @desc for all product
- * @access public
- */
-export declare const CreateAllProductController: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
-/**
- * @name getallProduct
- * @desc get all product from here
- * @acess public
- */
-export declare const getAllProduct: (req: Request, res: Response) => Promise<Response>;
-/**
- * @name getSingleProductController
- * @desc for every single product
- * @access Public
- */
-export declare const getSingleProductController: (req: Request, res: Response) => Promise<Response>;
 //# sourceMappingURL=auth.controler.d.ts.map

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { registerUserController, LoginUserController, logoutUserController, getMeController, createKeyboardCollectionControler, getAllKeyboards, getSingleKeyboard, CreateAllProductController, getAllProduct, getSingleProductController } from "../Controllers/auth.controler.js";
 import { authUser } from "../middleware/auth.middleware.js";
+import { createKeycapsCollectionController, getAllKeyCapsCollectionController, getSingleKeycapController, updateKeycapController, deleteKeycapController } from "../Controllers/keycap.controler.js";
 
 const authRouter: Router = Router();
 authRouter.post("/register", registerUserController)
@@ -13,6 +14,10 @@ authRouter.get("/getsinglekeyboard/:id", getSingleKeyboard)
 authRouter.post("/allproduct", CreateAllProductController)
 authRouter.get("/allproduct", getAllProduct)
 authRouter.get("/allproduct/:id", getSingleProductController)
-
+authRouter.post("/keycaps", createKeycapsCollectionController)
+authRouter.get("/keycaps", getAllKeyCapsCollectionController)
+authRouter.get("/keycaps/:id", getSingleKeycapController)
+authRouter.put("/keycaps/:id", updateKeycapController)
+authRouter.delete("/keycaps/:id", deleteKeycapController)
 
 export default authRouter;

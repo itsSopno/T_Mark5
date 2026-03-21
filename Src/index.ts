@@ -3,7 +3,8 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import authRouter from './Routes/auth.route.js'
-import { authUser } from './middleware/auth.middleware.js';
+import keyboardRouter from './Routes/keyboard.route.js'
+import keycapsRouter from './Routes/keycaps.route.js';
 
 // Configure dotenv
 dotenv.config();
@@ -23,7 +24,9 @@ app.use(cors());
 /**
  * @route using all routes
  */
-app.use("/api", authRouter, authUser)
+app.use("/api", authRouter)
+app.use("/api/keyboard", keyboardRouter)
+app.use("/api/keycaps", keycapsRouter)
 /**
  * @route test router
  */

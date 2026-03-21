@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { registerUserController, LoginUserController, logoutUserController, getMeController } from "../Controllers/auth.controler.js";
 import { authUser } from "../middleware/auth.middleware.js";
-import { createKeyboardCollectionControler, getAllKeyboards, getSingleKeyboard } from "../Controllers/keyboard.controller.js";
 import { createKeycapsCollectionController, getAllKeyCapsCollectionController, getSingleKeycapController, updateKeycapController, deleteKeycapController } from "../Controllers/keycap.controler.js";
 import { CreateAllProductController, getAllProduct, getSingleProductController } from "../Controllers/allPRoduct.controller.js";
 const authRouter: Router = Router();
@@ -9,9 +8,6 @@ authRouter.post("/register", registerUserController)
 authRouter.post("/login", LoginUserController)
 authRouter.get("/logout", logoutUserController)
 authRouter.get("/getMe", authUser, getMeController)
-authRouter.post("/createKeyboard", createKeyboardCollectionControler)
-authRouter.get("/getallkeyboard", getAllKeyboards)
-authRouter.get("/getsinglekeyboard/:id", getSingleKeyboard)
 authRouter.post("/allproduct", CreateAllProductController)
 authRouter.get("/allproduct", getAllProduct)
 authRouter.get("/allproduct/:id", getSingleProductController)

@@ -51,7 +51,7 @@ export const getAllProduct = async (req: Request, res: Response): Promise<Respon
         return res.status(200).json({
             success: true,
             count: products.length,
-            products
+            products: products
         })
     }
     catch (error: any) {

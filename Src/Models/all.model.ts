@@ -32,7 +32,7 @@ const ProductSchema = new Schema<IProduct>({
     quantity: {
         type: Number,
         required: true
-    }
+    },
 })
 
 const productModel = model<IProduct>("product", ProductSchema);

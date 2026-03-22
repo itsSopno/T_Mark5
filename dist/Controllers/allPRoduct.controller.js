@@ -48,7 +48,7 @@ export const getAllProduct = async (req, res) => {
         return res.status(200).json({
             success: true,
             count: products.length,
-            products: products
+            product: products
         });
     }
     catch (error) {
@@ -69,7 +69,7 @@ export const getSingleProductController = async (req, res) => {
         }
         return res.status(200).json({
             success: true,
-            product
+            product: product
         });
     }
     catch (error) {

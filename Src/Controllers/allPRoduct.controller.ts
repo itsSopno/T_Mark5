@@ -51,7 +51,7 @@ export const getAllProduct = async (req: Request, res: Response): Promise<Respon
         return res.status(200).json({
             success: true,
             count: products.length,
-            products: products
+            product: products
         })
     }
     catch (error: any) {
@@ -75,7 +75,7 @@ export const getSingleProductController = async (req: Request, res: Response): P
 
         return res.status(200).json({
             success: true,
-            product
+            product: product
         });
     } catch (error: any) {
         return res.status(500).json({ message: "Invalid ID or Server Error", error: error.message });

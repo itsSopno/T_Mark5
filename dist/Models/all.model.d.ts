@@ -5,8 +5,7 @@ interface IProduct extends Document {
     image: String;
     category: String;
     description: String;
-    brand: String;
-    stock: String;
+    quantity: String;
 }
 declare const productModel: import("mongoose").Model<IProduct, {}, {}, {}, Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
     _id: import("mongoose").Types.ObjectId;

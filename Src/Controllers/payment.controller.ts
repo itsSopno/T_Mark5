@@ -65,7 +65,7 @@ export const verifyPayment = async (req: Request, res: Response): Promise<any> =
  * @route GET /api/payment/getPaymentdata
  * @access Private
  */
-export const getPaymentdataController = async (req: Request, res: Response): Promise<any> => {
+export const getPaymentdataController = async (_req: Request, res: Response): Promise<any> => {
     try {
         const payments = await PaymentModel.find();
         return res.status(200).json({

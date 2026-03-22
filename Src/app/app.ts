@@ -2,7 +2,7 @@ import dns from 'node:dns';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
-import index from "../index.js"
+import app from "../index.js"
 import connectDB from '../Config/database.js';
 
 // DNS সার্ভার সেটআপ
@@ -22,7 +22,7 @@ const startServer = async () => {
         // ডাটাবেস কানেকশন
         await connectDB();
 
-        index.listen(PORT, () => {
+        app.listen(PORT, () => {
             console.log(`🚀 Server is running on port ${PORT}`);
         });
     } catch (error) {

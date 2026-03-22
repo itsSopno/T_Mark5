@@ -34,7 +34,7 @@ export const registerUserController = async (req: Request, res: Response) => {
         const token = jwt.sign({
             id: user._id
         }, process.env.JWT_SECRET as string, { expiresIn: "1d" })
-        res.cookie("Token", token, {
+        res.cookie("token", token, {
             httpOnly: true,
         })
         return res.status(201).json({

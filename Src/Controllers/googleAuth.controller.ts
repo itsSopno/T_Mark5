@@ -1,6 +1,5 @@
-import type { Request, Response, NextFunction } from "express"
+import type { Request, Response } from "express"
 import googleModel from "../Models/google.model.js"
-import userModel from "../Models/user.model.js"
 import jwt from "jsonwebtoken"
 
 /**
@@ -58,7 +57,7 @@ export const GoogleAuthController = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error("Auth Error:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 }
 
@@ -99,7 +98,7 @@ export const getMe = async (req: Request, res: Response): Promise<Response | voi
  * @acces private
  * @route GET api/Google/Logout
  */
-export const LogoutController = async (req: Request, res: Response): Promise<Response | void> => {
+export const LogoutController = async (_req: Request, res: Response): Promise<Response | void> => {
     try {
         res.clearCookie("Token", {
             httpOnly: true,

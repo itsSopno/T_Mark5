@@ -12,7 +12,7 @@ import {} from "../middleware/auth.middleware.js";
 export const registerUserController = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        if (!name || !email || !password) {
+        if (!email || !password) {
             return res.status(400).json({ message: "Please provide name , email , and password" });
         }
         const isUserExist = await userModel.findOne({
@@ -32,9 +32,8 @@ export const registerUserController = async (req, res) => {
         const token = jwt.sign({
             id: user._id
         }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        res.cookie("Token", token, {
+        res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
         });
         return res.status(201).json({
             message: "User Registered Successfully",

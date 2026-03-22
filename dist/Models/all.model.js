@@ -2,31 +2,27 @@ import { Document, model, Schema } from "mongoose";
 const ProductSchema = new Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     price: {
         type: Number,
-        require: true
+        required: true
     },
     image: {
         type: String,
-        require: true
+        required: true
     },
     category: {
         type: String,
-        require: true
+        required: true
     },
     description: {
         type: String,
-        require: true
+        required: true
     },
-    brand: {
-        type: String,
-        require: true
-    },
-    stock: {
-        type: String,
-        require: true
+    quantity: {
+        type: Number,
+        required: true
     }
 });
 const productModel = model("product", ProductSchema);

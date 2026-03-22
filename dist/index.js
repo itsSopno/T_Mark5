@@ -6,6 +6,8 @@ import authRouter from './Routes/auth.route.js';
 import keyboardRouter from './Routes/keyboard.route.js';
 import keycapsRouter from './Routes/keycaps.route.js';
 import allproductRouter from './Routes/allproduct.route.js';
+import paymentRouter from './Routes/payment.route.js';
+import googleRouter from './Routes/google.route.js';
 // Configure dotenv
 dotenv.config();
 const app = express();
@@ -24,9 +26,11 @@ app.use(cors());
  * @route using all routes
  */
 app.use("/api", authRouter);
+app.use("/api/google", googleRouter);
 app.use("/api/keyboard", keyboardRouter);
 app.use("/api/keycaps", keycapsRouter);
 app.use("/api/products", allproductRouter);
+app.use("/api/payment", paymentRouter);
 /**
  * @route test router
  */

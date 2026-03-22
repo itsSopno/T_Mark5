@@ -6,18 +6,17 @@ import productModel from "../Models/all.model.js";
  */
 export const CreateAllProductController = async (req, res) => {
     try {
-        const { name, price, image, stock, description, category, brand, } = req.body;
-        if (!name || !price || !image || !stock || !description || !category || !brand) {
-            return res.status(201).json({ message: "Nothing posted" });
+        const { name, price, image, quantity, description, category } = req.body;
+        if (!name || !price || !image || !quantity || !description || !category) {
+            return res.status(400).json({ message: "All fields are required" });
         }
         const product = await productModel.create({
             name,
             price,
-            stock,
             image,
             description,
-            brand,
             category,
+            quantity
         });
         return res.status(201).json({
             message: "Product posted successfully",
@@ -35,12 +34,10 @@ export const CreateAllProductController = async (req, res) => {
  */
 export const getAllProduct = async (req, res) => {
     try {
-        const { category, brand, searchTerm } = req.query;
+        const { category, searchTerm } = req.query;
         let query = {};
         if (category)
             query.category = category;
-        if (brand)
-            query.brand = brand;
         if (searchTerm) {
             query.$or = [
                 { name: { $regex: searchTerm, $options: 'i' } },

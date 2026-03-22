@@ -6,8 +6,7 @@ interface IProduct extends Document {
     image: String,
     category: String,
     description: String,
-    brand: String,
-    stock: String,
+    quantity: String,
 }
 const ProductSchema = new Schema<IProduct>({
     name: {
@@ -30,12 +29,8 @@ const ProductSchema = new Schema<IProduct>({
         type: String,
         require: true
     },
-    brand: {
-        type: String,
-        require: true
-    },
-    stock: {
-        type: String,
+    quantity: {
+        type: Number,
         require: true
     }
 })

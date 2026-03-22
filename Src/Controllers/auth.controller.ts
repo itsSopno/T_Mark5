@@ -14,7 +14,7 @@ import { type CustomRequest } from "../middleware/auth.middleware.js";
 export const registerUserController = async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
-        if (!name || !email || !password) {
+        if (!email || !password) {
             return res.status(400).json({ message: "Please provide name , email , and password" })
         }
         const isUserExist = await userModel.findOne({

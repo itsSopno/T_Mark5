@@ -1,101 +1,95 @@
-import {Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 export interface IGraphicsCard {
-    name:string;
-    price:number;
-    oldPrice?:number;
-    image:string;
-    iamges:string[];
-    stock:number;
-    brand:string;
-    model:string;
-    vramSize:number;
-    vramType:string;
-    coreClock:number;
-    boostClock:number;
-    powerConnectors:string[];
-    displayOutputs:string[];
-    rayTracing:boolean;
-    dlss:boolean;
-    description:string;
-    isFeatured:boolean;
-    port:string;
+    name: string;
+    price: number;
+    oldPrice?: number;
+    image: string;
+    iamges: string[];
+    stock: number;
+    brand: string;
+    model?: string;
+    vramSize?: number;
+    vramType?: string;
+    coreClock?: number;
+    boostClock?: number;
+    powerConnectors?: string[];
+    displayOutputs?: string[];
+    rayTracing?: boolean;
+    dlss?: string;
+    description: string;
+    isFeatured: boolean;
+    port?: string;
 }
 
 const graphicsCardSchema = new Schema<IGraphicsCard>({
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
     },
-    price:{
-        type:Number,
-        required:true
+    price: {
+        type: Number,
+        required: true
     },
-    oldPrice:{
-        type:Number
+    oldPrice: {
+        type: Number
     },
-    image:{
-        type:String,
-        required:true
+    image: {
+        type: String,
+        required: true
     },
-    iamges:{
-        type:[String],
-        default:[]
+    iamges: {
+        type: [String],
+        default: []
     },
-    stock:{
-        type:Number,
-        default:100
+    stock: {
+        type: Number,
+        default: 100
     },
-    brand:{
-        type:String,
-        required:true
+    brand: {
+        type: String,
+        required: true
     },
-    model:{
-        type:String,
-        required:true
+    model: {
+        type: String,
     },
-    vramSize:{
-        type:Number,
-        required:true
+    vramSize: {
+        type: Number,
     },
-    vramType:{
-        type:String,    
-    required:true
+    vramType: {
+        type: String,
     },
-    coreClock:{
-        type:Number,    
-    required:true
+    coreClock: {
+        type: Number,
     },
-    boostClock:{
-        type:Number,
-    required:true
+    boostClock: {
+        type: Number,
     },
-    powerConnectors:{
-        type:[String],
+    powerConnectors: {
+        type: [String],
     },
-    displayOutputs:{
-        type:[String],
+    displayOutputs: {
+        type: [String],
     },
-    rayTracing:{
-        type:Boolean,
-    },  
-    dlss:{
-        type:Boolean,
+    rayTracing: {
+        type: Boolean,
     },
-    description:{
-        type:String,
-        required:true
+    dlss: {
+        type: String,   // ← Boolean থেকে String করা হয়েছে (frontend "DLSS 3", "FSR 3" পাঠায়)
     },
-    isFeatured:{
-        type:Boolean,
-        default:false
+    description: {
+        type: String,
+        required: true
     },
-    port:{
-        type:String,
-        required:true
+    isFeatured: {
+        type: Boolean,
+        default: false
+    },
+    port: {
+        type: String,
     }
-},{
-    timestamps:true
+}, {
+    timestamps: true
 })
 
 export const GraphicsCard = model<IGraphicsCard>('GraphicsCard', graphicsCardSchema)

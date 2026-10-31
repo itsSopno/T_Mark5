@@ -17,6 +17,7 @@ import PostRouter from './Routes/post.route.js';
 import projectRouter from './Routes/project.route.js';
 import monitorRouter from './Routes/monitor.routes.js';
 import graphicsRouter from './Routes/graphics.route.js';
+import liquidCoolerRouter from './Routes/liquidCooler.route.js';
 // Configure dotenv
 dotenv.config();
 
@@ -61,6 +62,7 @@ app.use("/api/friend", friendRouter)
 app.use("/api/project", projectRouter)
 app.use("/api/monitor", monitorRouter)
 app.use("/api/graphics", graphicsRouter)
+app.use("/api/liquid-cooler", liquidCoolerRouter)
 
 /**
  * @route test router
